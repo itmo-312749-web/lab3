@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jstl/core">
+  <svg id="plot" class="d-block m-auto" height="400px" width="400px">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7"/>
+      </marker>
+    </defs>
+    <rect class="shape" x="125" y="50" width="75" height="150"/>
+    <polygon class="shape" points="125 200, 200 200, 200 275"/>
+    <path class="shape" d="M 200 275 A 75 75, 1, 0, 0, 275 200 L 200 200 Z"/>
+    <line x1="10" y1="200" x2="380" y2="200" stroke="#000" stroke-width="1"
+          marker-end="url(#arrowhead)"/>
+    <line x1="200" y1="390" x2="200" y2="20" stroke="#000" stroke-width="1"
+          marker-end="url(#arrowhead)"/>
+
+    <circle cx="200" cy="200" r="3" fill="blue"/>
+
+    <circle cx="200" cy="50" r="3"/>
+    <text class="plot-label" text-anchor="end" alignment-baseline="middle" x="190" y="50">R</text>
+    <circle cx="200" cy="125" r="3"/>
+    <text class="plot-label" text-anchor="end" alignment-baseline="middle" x="190" y="125">R/2</text>
+    <circle cx="200" cy="275" r="3"/>
+    <text class="plot-label" alignment-baseline="middle" x="210" y="275">-R/2</text>
+    <circle cx="200" cy="350" r="3"/>
+    <text class="plot-label" alignment-baseline="middle" x="210" y="350">-R</text>
+
+    <circle cx="50" cy="200" r="3"/>
+    <text class="plot-label" text-anchor="middle" alignment-baseline="baseline" x="350" y="190">R</text>
+    <circle cx="125" cy="200" r="3"/>
+    <text class="plot-label" text-anchor="middle" alignment-baseline="baseline" x="275" y="190">R/2</text>
+    <circle cx="275" cy="200" r="3"/>
+    <text class="plot-label" text-anchor="middle" alignment-baseline="hanging" x="125" y="220">-R/2</text>
+    <circle cx="350" cy="200" r="3"/>
+    <text class="plot-label" text-anchor="middle" alignment-baseline="hanging" x="50" y="220">-R</text>
+
+    <c:if test='#{resultService.getLastResult() != null}'>
+      <text class="plot-label" x="10" y="20">
+        R=${resultService.lastResult.r}
+      </text>
+      <circle cx='#{((150 / resultService.lastResult.r) * resultService.lastResult.x) + 200}'
+              cy='#{-((150 / resultService.lastResult.r) * resultService.lastResult.y) + 200}'
+              r='3' fill='#{resultService.lastResult.hit ? "limegreen" : "crimson"}'/>
+    </c:if>
+
+  </svg>
+
+</ui:composition>

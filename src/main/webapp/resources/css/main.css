@@ -1,0 +1,44 @@
+.plot-holder {
+    position: relative;
+    background-color: #ffffff;
+
+    min-height: 420px;
+
+    border-radius: 0 0 1.5rem 1.5rem;
+}
+
+.shape {
+    fill: rgba(196, 196, 196, 0.5);
+}
+
+.shape:hover {
+    stroke-width: 2px;
+    fill-opacity: .75;
+}
+
+#controls, #plot-wrapper {
+    min-width: 450px;
+}
+
+body .ui-chkbox .ui-chkbox-box .ui-chkbox-icon {
+    margin-top: -0.75rem;
+}
+
+.ui-outputlabel.ui-state-error{
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+}
+
+.ui-selectbooleancheckbox .ui-chkbox-label {
+    width: 16px /*!important*/;
+    display: flex;
+    justify-content: center;
+}
+
+.ui-button.ui-button-text-only.form-control {
+    padding: .5rem;
+}
+
+.ui-button.ui-button-text-only.form-control .ui-button-text {
+    padding: 0;
+    line-height: 1.5;
+}

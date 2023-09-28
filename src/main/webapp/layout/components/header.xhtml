@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+  <div id='personal-info' class="d-flex justify-content-between container-fluid bg-body-tertiary border-bottom border-2 p-2 ps-4 pe-4"
+          data-bs-theme="dark">
+    <p class="d-inline-block m-0" style="color: white; max-width: 33%;">Kharlamov Vladislav</p>
+    <p class="d-inline-block m-0" style="color: white; max-width: 33%;">P32311</p>
+    <p class="d-inline-block m-0" style="color: white; max-width: 33%;">Variant #371429</p>
+  </div>
+  <nav class="navbar bg-body-tertiary sticky-top shadow ps-4 pe-4" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" id="brand" href="#">Web Lab #3</a>
+
+      <p:clock/>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"/>
+      </button>
+      <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"/>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <h:link styleClass='#{activePage == "index" ? "active nav-link " : "nav-link "}'
+                       outcome="Index">
+                Home
+              </h:link>
+            </li>
+            <li class="nav-item">
+              <h:link styleClass='#{activePage == "main" ? "active nav-link " : "nav-link "}'
+                      outcome="Main">
+                Dot Service
+              </h:link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</ui:composition>

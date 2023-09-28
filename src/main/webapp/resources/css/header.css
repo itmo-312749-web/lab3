@@ -1,0 +1,17 @@
+#personal-info {
+    min-width: 480px;
+}
+
+.navbar {
+    min-width: 480px;
+}
+
+body .ui-clock {
+    color: white !important;
+    font-weight: 700;
+    min-width: 150px;
+    padding: 0 !important;
+    margin: 5px !important;
+    background: transparent !important;
+    border: 0 !important;
+}

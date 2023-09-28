@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+  <link rel="icon" type="image/x-icon" href='#{resource["icons/favicon.svg"]}'/>
+  <title>
+    <ui:insert name="page-title">
+      Default Page Title
+    </ui:insert>
+  </title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"/>
+  <h:outputStylesheet library="css" name="header.css"/>
+  <h:outputStylesheet library="css" name="base.css"/>
+  <ui:insert name="additional-styles"/>
+</h:head>
+
+<h:body styleClass='bg-light'>
+  <h:form>
+    <ui:include src="components/header.xhtml">
+      <ui:param name='activePage' value='#{activePage}'/>
+    </ui:include>
+
+    <div id='content-wrapper' class="container-lg p-3 shadow">
+      <ui:insert name="content">
+        Content placeholder
+      </ui:insert>
+    </div>
+  </h:form>
+
+  <script type="text/javascript"
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"/>
+  <ui:insert name="additional-body-scripts"/>
+</h:body>
+</html>

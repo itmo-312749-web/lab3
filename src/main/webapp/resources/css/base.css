@@ -1,0 +1,8 @@
+#content-wrapper {
+    min-height: 100vh;
+    background: #ffffff;
+}
+
+#brand {
+    font-weight: 700;
+}
