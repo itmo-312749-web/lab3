@@ -3,6 +3,7 @@ package com.itmo.web.lab3;
 import com.itmo.web.lab3.check.AbstractChecker;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 import org.primefaces.PrimeFaces;
@@ -20,7 +21,7 @@ public class ComputeService implements Serializable {
     private List<AbstractChecker> checkerList;
     private Double currentX;
     private Double currentY;
-    private Double currentR;
+    private Double currentR = 1.0;
 
     @PostConstruct
     public void init() {

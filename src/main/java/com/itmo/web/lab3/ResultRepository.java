@@ -2,6 +2,7 @@ package com.itmo.web.lab3;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.SessionScoped;
 import jakarta.inject.Named;
 import jakarta.persistence.*;
@@ -14,8 +15,7 @@ import java.util.Scanner;
 import java.util.UUID;
 
 @Named
-@SessionScoped
-//@Transactional
+@ApplicationScoped
 public class ResultRepository implements Serializable {
 
     private EntityManager entityManager;
@@ -52,8 +52,9 @@ public class ResultRepository implements Serializable {
         try {
             transaction.begin();
             entityManager.persist(result);
-            transaction.commit();
             lastInserted = result.getId();
+            System.out.println("Last inserted ID: " + lastInserted);
+            transaction.commit();
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
@@ -70,8 +71,9 @@ public class ResultRepository implements Serializable {
             TypedQuery<Result> q = entityManager
                     .createQuery("select r from results r where id=:id", Result.class)
                     .setParameter("id", lastInserted);
+            Result lastResult = q.getSingleResult();
             transaction.commit();
-            return q.getSingleResult();
+            return lastResult;
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();

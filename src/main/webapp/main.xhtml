@@ -17,46 +17,36 @@
   <!-- body -->
   <ui:param name='activePage' value='main'/>
   <ui:define name="content">
-    <p:remoteCommand name="asyncPointCheck" action="#{mainView.exec()}" oncomplete="afterPointCheck(args)"/>
-
     <div class='row flex-wrap'>
       <div id='plot-wrapper' class='col'>
         <ui:include src='layout/components/plot.xhtml'/>
       </div>
       <div id='controls' class='col mt-3 mb-3'>
-
+        <p:remoteCommand name='computeCurrentAndPersist' value='#{computeService.computeCurrentAdnPersist}'/>
+        <p:remoteCommand name='updateForm' update='@form' oncomplete='attachClickListener'/>
         <p:messages id="msgs"/>
 
         <div class='input-group mb-3 flex-nowrap'>
           <div class='col input-group flex-nowrap'>
             <p:outputLabel class='input-group-text p-2' for='x' value='X'/>
-            <p:selectOneMenu id='x' styleClass='form-control' required='true' value='#{computeService.currentX}'>
-              <f:selectItem itemValue='-5' itemLabel='-5'/>
-              <f:selectItem itemValue='-4' itemLabel='-4'/>
-              <f:selectItem itemValue='-3' itemLabel='-3'/>
-              <f:selectItem itemValue='-2' itemLabel='-2'/>
-              <f:selectItem itemValue='-1' itemLabel='-1'/>
-              <f:selectItem itemValue='0' itemLabel='0'/>
-              <f:selectItem itemValue='1' itemLabel='1'/>
-              <f:selectItem itemValue='2' itemLabel='2'/>
-              <f:selectItem itemValue='3' itemLabel='3'/>
-              <f:selectItem itemValue='4' itemLabel='4'/>
-              <f:selectItem itemValue='5' itemLabel='5'/>
-              <f:validateLongRange minimum='-5' maximum='5'/>
-            </p:selectOneMenu>
+            <p:inputText id="x" styleClass='y-input form-control' placeholder='[ -5 ; 5 ]'
+                         required='true' value='#{computeService.currentX}' widgetVar='x'>
+              <f:validateDoubleRange minimum='-5' maximum='5'/>
+            </p:inputText>
           </div>
         </div>
         <div class='input-group mb-3'>
           <p:outputLabel styleClass='input-group-text p-2' for='y' value='Y'/>
           <p:inputText id="y" styleClass='y-input form-control' placeholder='[ -3 ; 3 ]'
-                       required='true' value='#{computeService.currentY}'>
+                       required='true' value='#{computeService.currentY}' widgetVar='y'>
             <f:validateDoubleRange minimum='-3' maximum='3'/>
           </p:inputText>
         </div>
         <div class='row'>
           <div class='col input-group flex-nowrap'>
             <p:outputLabel class='input-group-text p-2' for='r' value='R'/>
-            <p:selectOneMenu id='r' styleClass='form-control' required='true' value='#{computeService.currentR}'>
+            <p:selectOneMenu id='r' styleClass='form-control' required='true'
+                             value='#{computeService.currentR}' widgetVar='r'>
               <f:selectItem itemValue='1' itemLabel='1'/>
               <f:selectItem itemValue='2' itemLabel='2'/>
               <f:selectItem itemValue='3' itemLabel='3'/>
@@ -67,8 +57,8 @@
           </div>
 
           <div class='col input-group'>
-            <p:commandButton styleClass='form-control' value="Submit" update="@form"
-                             action='#{computeService.computeCurrentAdnPersist}' oncomplete=''/>
+            <p:commandButton id='submit-btn' styleClass='form-control' value="Submit" update="@form"
+                             action='#{computeService.computeCurrentAdnPersist}' oncomplete='attachClickListener()'/>
           </div>
         </div>
       </div>
@@ -101,6 +91,43 @@
         </table>
       </div>
     </div>
+  </ui:define>
+  <ui:define name='additional-body-scripts'>
+    <p:outputPanel autoUpdate='true'>
+      <h:outputScript library='js'>
+        function isRValid() {
+          let rValue = PF("r").getSelectedValue()
+          let validRValues = [1, 2, 3, 4, 5]
+          return validRValues.includes(parseInt(rValue))
+        }
+
+        function attachClickListener() {
+          const plot = document.querySelector("#plot")
+          const plotWidth = plot.width.baseVal.value
+          const plotHeight = plot.height.baseVal.value
+          plot.addEventListener("click", (evt) => {
+            if (!isRValid()) {
+              alert("Set valid radius!")
+              return
+            }
+            const radius = PF("r").getSelectedValue()
+            const rawX = evt.offsetX - plotWidth / 2
+            const rawY = -(evt.offsetY - plotHeight / 2)
+            console.log(rawX, rawY)
+            const normalizedX = Number(rawX / 150 * radius).toFixed(3)
+            const normalizedY = Number(rawY / 150 * radius).toFixed(3)
+            console.log(normalizedX, normalizedY)
+
+            PF("x").getJQ().val(normalizedX)
+            PF("y").getJQ().val(normalizedY)
+
+            document.getElementById("base-form:submit-btn").click()
+          })
+        }
+
+        attachClickListener()
+      </h:outputScript>
+    </p:outputPanel>
   </ui:define>
 </ui:composition>
 </html>
